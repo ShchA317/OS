@@ -55,3 +55,12 @@ sched-prio, sched-period, sched-runtime, sched-deadline, resched, schedpolicy, y
 - Файловая система procfs;
 - Использование утилиты strace, ltrace, bpftrace;
 - Профилирование и построение flamegraph'а и stap;
+
+###### вариант
+cpu: [float80,int128float]; \
+cache: [l1cache-line-size,l1cache]; \
+io: [io-uring,ioport]; \
+memory: [zlib-mem-level,lockbus]; \
+network: [netlink-task,netdev]; \
+pipe: [pipe-ops,sigpipe]; \
+sched: [sched-runtime,schedpolicy] 
