@@ -380,6 +380,90 @@ stress-ng: info:  [11810] metrics untrustworthy: 0
 stress-ng: info:  [11810] successful run completed in 5.61 secs
 ```
 
+### IO test
+
+для использования утилит типа `iotop` необходимо исопльзоавть sudo, т.к пользователям по-умолчанию не предоставляется исчерпываающая информация по файлам в файловой системе.
+
+
+> Io-uring stressor \
+            --io-uring N \
+                   start N workers that perform iovec write and read I/O operations using the Linux io-uring interface. On each bogo-loop 1024 × 512 byte writes and 1024 × reads are performed on a temporary file.
+
+
+`iotop` в "спокойном" состоянии - stress-ng выключен: 
+
+
+```
+Total DISK READ :       0.00 B/s | Total DISK WRITE :       0.00 B/s
+Actual DISK READ:       0.00 B/s | Actual DISK WRITE:       0.00 B/s
+```
+
+запускаем нагрузку io-uring с 16 "воркеров" на 10 секунд:
+
+```
+stress-ng --io-uring 16 --metrics --timeout 10
+```
+
+`iotop` под нагрузкой 
+
+```
+Total DISK READ :       0.00 B/s | Total DISK WRITE :      54.78 M/s
+Actual DISK READ:       0.00 B/s | Actual DISK WRITE:      60.79 M/s
+```
+
+график нагрузки на IO-bridge:
+
+
+
+
+--- 
+
+
+Из документации stress-ng:
+
+> --ioport N \
+                   start N workers than perform bursts of 16 reads and 16 writes of ioport 0x80 (x86 Linux systems only).  I/O performed on x86 platforms on port 0x80 will cause delays on the CPU performing the I/O.
+
+
+результат выполнения НТ для 512 "воркеров":
+
+```
+> sudo stress-ng --ioport 512 --metrics --timeout 10
+stress-ng: info:  [3821] setting to a 10 secs run per stressor
+stress-ng: info:  [3821] dispatching hogs: 512 ioport
+stress-ng: metrc: [3821] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
+stress-ng: metrc: [3821]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
+stress-ng: metrc: [3821] ioport           104924     10.14     76.21      4.23     10352.38        1304.37         2.24          2584
+stress-ng: metrc: [3821] miscellaneous metrics:
+stress-ng: metrc: [3821] ioport            508164.69 nanosecs per inb(0x80) op (geometric mean of 355 instances)
+stress-ng: metrc: [3821] ioport            473698.40 nanosecs per outb(0x80) op (geometric mean of 355 instances)
+stress-ng: info:  [3821] skipped: 0
+stress-ng: info:  [3821] passed: 355: ioport (355)
+stress-ng: info:  [3821] failed: 0
+stress-ng: info:  [3821] metrics untrustworthy: 0
+stress-ng: info:  [3821] successful run completed in 21.13 secs
+```
+
+
+график нагрузки на IO:
+
+
+
+
+
+### memory
+
+
+Из документации stress-ng:
+
+> zlib-mem-level L \
+                   specify the reserved compression state memory for zlib.  Default is 8. \
+                   Value \ 
+                     1    minimum memory usage. \
+                     9    maximum memory usage. \
+
+
+
 
 
 
