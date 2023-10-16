@@ -9,7 +9,7 @@
 необходимо добиться максимальной производительности системы
 
 
-в документации stree-ng написано:
+в документации stress-ng написано:
 
 > bogo ops number of iterations of the stressor during the run. This is metric of how much overall "work" has been achieved in bogo operations.  Do not use this as a reliable measure of throughput for benchmarking.
 
