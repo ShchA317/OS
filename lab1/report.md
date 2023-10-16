@@ -82,7 +82,7 @@ Vulnerabilities:
 в процессе выполнения нам важно понимать, на сколько загружается каждое из ядер процессора для мониторинга этого параметра можно использовать
 
 ```bash
-watch -n0.1 "grep Hz /proc/cpuinfo"
+> watch -n0.1 "grep Hz /proc/cpuinfo"
 ```
 
 для мониторинга нагрузки на каждое их ядер процессора можно воспользоваться утилитой `htop` или стандартной `top`
@@ -256,7 +256,7 @@ watch -n0.1 "grep Hz /proc/cpuinfo"
 запустим десятисекундный тест с float80 арифметикой для двух ядер:
 
 ```
-# stress-ng --cpu 2 --cpu-method float80 --metrics --timeout 10
+> stress-ng --cpu 2 --cpu-method float80 --metrics --timeout 10
 
 stress-ng: info:  [2565] setting to a 10 secs run per stressor
 stress-ng: info:  [2565] dispatching hogs: 2 cpu
@@ -275,7 +275,7 @@ stress-ng: info:  [2565] successful run completed in 10.00 secs
 В момент нагрузки иммеем максимальную частоту процессора на всех ядрах в течение всего теста.
 
 ```
-# watch -n1 "grep Hz /proc/cpuinfo"
+> watch -n1 "grep Hz /proc/cpuinfo"
 
 Every 0.01s: grep Hz /proc/cpuinfo                       archlinux: Mon Oct 16 11:12:11 2023
 
@@ -303,8 +303,8 @@ Tasks: 157 total,   1 running, 156 sleeping,   0 stopped,   0 zombie
 в результате выполнения эксперимента было утсановлено, что наибольшую производительность процессор показывает при использовании всех 4-х виртуальных ядер.
 
 
-```bash
-# stress-ng --cpu 4 --cpu-method float80 --metrics --timeout 10
+```
+> stress-ng --cpu 4 --cpu-method float80 --metrics --timeout 10
 stress-ng: info:  [7023] setting to a 10 secs run per stressor
 stress-ng: info:  [7023] dispatching hogs: 4 cpu
 stress-ng: metrc: [7023] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
@@ -320,10 +320,10 @@ stress-ng: info:  [7023] successful run completed in 10.01 secs
 аналогично для float128:
 
 ```bash
-# stress-ng --cpu 4 --cpu-method float128 --metrics --timeout 10
+> stress-ng --cpu 4 --cpu-method float128 --metrics --timeout 10
 stress-ng: info:  [7478] setting to a 10 secs run per stressor
 stress-ng: info:  [7478] dispatching hogs: 4 cpu
-]stress-ng: metrc: [7478] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
+stress-ng: metrc: [7478] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
 stress-ng: metrc: [7478]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
 stress-ng: metrc: [7478] cpu               45571     10.00     39.74      0.01      4556.90        1146.29        99.38          5024
 stress-ng: info:  [7478] skipped: 0
@@ -349,7 +349,7 @@ stress-ng: info:  [7478] successful run completed in 10.00 secs
 лучшие результаты при тестирвоании кэша на пятисекундном отрезке были получены при использовании двух "воркеров":
 
 ```
-# stress-ng --l1cache 2 --metrics --timeout 5
+> stress-ng --l1cache 2 --metrics --timeout 5
 stress-ng: info:  [9325] setting to a 5 secs run per stressor
 stress-ng: info:  [9325] dispatching hogs: 2 l1cache
 stress-ng: info:  [9326] l1cache: l1cache: size: 48.0K, sets: 64, ways: 12, line size: 64 bytes
@@ -366,7 +366,7 @@ stress-ng: info:  [9325] successful run completed in 5.09 secs
 для большего охвата кэша во время теста оказалось эффективным уменьшить line-size до двух байтов:
 
 ```
-# stress-ng --l1cache 2 --l1cache-line-size 2 --metrics --timeout 5
+> stress-ng --l1cache 2 --l1cache-line-size 2 --metrics --timeout 5
 stress-ng: info:  [11810] setting to a 5 secs run per stressor
 stress-ng: info:  [11810] dispatching hogs: 2 l1cache
 stress-ng: info:  [11811] l1cache: l1cache: size: 48.0K, sets: 2048, ways: 12, line size: 2 bytes
