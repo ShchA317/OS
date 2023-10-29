@@ -478,7 +478,18 @@ stress-ng: info:  [9325] metrics untrustworthy: 0
 stress-ng: info:  [9325] successful run completed in 5.09 secs
 ```
 
-для большего охвата кэша во время теста оказалось эффективным уменьшить line-size до двух байтов:
+аналогично используем скрипт для поиска оптимального размера линии кэша
+
+```bash
+#!/bin/sh
+for i in {1..16..1}; do
+    echo "run with l1cache=$i"
+    a=`stress-ng --l1cache 2 --l1cache-line-size $i --metrics --timeout 2`
+    echo "${a:214:405}"
+done
+```
+
+для большего охвата кэша во время теста оказалось эффективным уменьшить line-size до двух байтов. Результат для пятисекундного промежутка:
 
 ```
 > stress-ng --l1cache 2 --l1cache-line-size 2 --metrics --timeout 5
