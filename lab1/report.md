@@ -320,7 +320,7 @@ stress-ng: info:  [7023] successful run completed in 10.01 secs
 для того, чтобы более подробно разобраться в том, куда тратится процессорное время и определить какие функции использует `stress-ng` для нагрузки CPU, обратимся к утилитам `perf` и `flamegraph`:
 
 ```
-sudo perf record -F 99 -a -g stress-ng --cpu 4 --cpu-method float80 --metrics --timeout 10
+sudo perf record -F 99 -g stress-ng --cpu 4 --cpu-method float80 --metrics --timeout 10
 sudo perf script | stackcollapse-perf.pl | flamegraph.pl > graph-float80-test.svg
 ```
 
@@ -347,7 +347,7 @@ stress-ng: info:  [7478] successful run completed in 10.00 secs
 
 
 ```
-sudo perf record -F 99 -a -g stress-ng --cpu 4 --cpu-method float128 --metrics --timeout 10
+sudo perf record -F 99 -g stress-ng --cpu 4 --cpu-method float128 --metrics --timeout 10
 sudo perf script | stackcollapse-perf.pl | flamegraph.pl > graph-float128-test.svg
 ```
 
