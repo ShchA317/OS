@@ -300,7 +300,7 @@ Tasks: 157 total,   1 running, 156 sleeping,   0 stopped,   0 zombie
 %Cpu3  :  1.0 us,  0.3 sy,  0.0 ni, 98.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st 
 ```
 
-в результате выполнения эксперимента было утсановлено, что наибольшую производительность процессор показывает при использовании всех 4-х виртуальных ядер, но показатель производительности на одно ядро по сравнению с тестом на двух "воркерах" остается неизменным.
+в результате выполнения эксперимента было утсановлено, что наибольшую производительность процессор показывает при использовании всех 4-х виртуальных ядер, но показатель производительности на одно ядро по сравнению с тестом на двух "воркерах" остается неизменным. При увеличении количества "воркеров" показатели производительно не растут, а параметр `CPU used per instance (%)"` уменьшается - связано это с тем, что большее количество источников просто разделяет между собой процессорное время на ядре.
 
 
 ```
@@ -316,6 +316,18 @@ stress-ng: info:  [7023] failed: 0
 stress-ng: info:  [7023] metrics untrustworthy: 0
 stress-ng: info:  [7023] successful run completed in 10.01 secs
 ```
+
+для того, чтобы более подробно разобраться в том, куда тратится процессорное время и определить какие функции использует `stress-ng` для нагрузки CPU, обратимся к утилитам `perf` и `flamegraph`:
+
+```
+sudo perf record -F 99 -a -g stress-ng --cpu 4 --cpu-method float80 --metrics --timeout 10
+sudo perf script | stackcollapse-perf.pl | flamegraph.pl > graph-float80-test.svg
+```
+
+![graph-float80-test.svg](images/graph-float80-test.svg)
+
+видим, что большинство процессорного времени (а именно более 82%) занимает функция `libm.so.6`, также в явном виде можем увидеть функции работы с `float64` числами: `sincosf64x`, `sinf64x` и `cosf64x`. Что позволяет сделать предположение о том, что операции с `float80` реализованы через операции с меньшей разрядностью. 
+
 
 аналогично для float128:
 
@@ -333,6 +345,15 @@ stress-ng: info:  [7478] metrics untrustworthy: 0
 stress-ng: info:  [7478] successful run completed in 10.00 secs
 ```
 
+
+```
+sudo perf record -F 99 -a -g stress-ng --cpu 4 --cpu-method float128 --metrics --timeout 10
+sudo perf script | stackcollapse-perf.pl | flamegraph.pl > graph-float128-test.svg
+```
+
+![graph-float128-test.svg](images/graph-float128-test.svg)
+
+на flamegraph получаем результат подобный тому, что получили при работе с `float80`.
 
 ### cache testing
 
