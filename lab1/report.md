@@ -489,21 +489,37 @@ for i in {1..16..1}; do
 done
 ```
 
-для большего охвата кэша во время теста оказалось эффективным уменьшить line-size до двух байтов. Результат для пятисекундного промежутка:
+для большего охвата кэша во время теста оказалось эффективным уменьшить line-size до двух байтов. Результат для пятисекундного промежутка с профилированием:
 
 ```
-> stress-ng --l1cache 2 --l1cache-line-size 2 --metrics --timeout 5
-stress-ng: info:  [11810] setting to a 5 secs run per stressor
-stress-ng: info:  [11810] dispatching hogs: 2 l1cache
-stress-ng: info:  [11811] l1cache: l1cache: size: 48.0K, sets: 2048, ways: 12, line size: 2 bytes
-stress-ng: metrc: [11810] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [11810]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [11810] l1cache            8192      5.61     11.20      0.00      1461.10         731.11        99.92          2720
-stress-ng: info:  [11810] skipped: 0
-stress-ng: info:  [11810] passed: 2: l1cache (2)
-stress-ng: info:  [11810] failed: 0
-stress-ng: info:  [11810] metrics untrustworthy: 0
-stress-ng: info:  [11810] successful run completed in 5.61 secs
+sudo perf stat -B -e cache-references,cache-misses,cycles,instructions,branches,faults,migrations stress-ng --l1cache 2 --l1cache-line-size 2 --metrics --timeout 5
+stress-ng: info:  [23440] setting to a 5 secs run per stressor
+stress-ng: info:  [23440] dispatching hogs: 2 l1cache
+stress-ng: info:  [23441] l1cache: l1cache: size: 48.0K, sets: 2048, ways: 12, line size: 2 bytes
+stress-ng: metrc: [23440] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
+stress-ng: metrc: [23440]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
+stress-ng: metrc: [23440] l1cache            8192      5.56     11.12      0.00      1472.13         736.84        99.90          2716
+stress-ng: info:  [23440] skipped: 0
+stress-ng: info:  [23440] passed: 2: l1cache (2)
+stress-ng: info:  [23440] failed: 0
+stress-ng: info:  [23440] metrics untrustworthy: 0
+stress-ng: info:  [23440] successful run completed in 5.57 secs
+
+ Performance counter stats for 'stress-ng --l1cache 2 --l1cache-line-size 2 --metrics --timeout 5':
+
+         1,598,033      cache-references                                                      
+           619,496      cache-misses                     #   38.77% of all cache refs         
+    37,717,614,691      cycles                                                                
+   131,183,116,574      instructions                     #    3.48  insn per cycle            
+    32,788,603,630      branches                                                              
+               848      faults                                                                
+                55      migrations                                                            
+
+       5.579686894 seconds time elapsed
+
+      11.126315000 seconds user
+       0.004825000 seconds sys
+
 ```
 
 ### IO test
