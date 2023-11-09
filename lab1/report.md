@@ -517,7 +517,7 @@ done
 
 аналогично поиску значения параметра netlink-task, воспользуемся 
 
-```
+```shell
 #!/bin/sh
 for i in {1..16..1}; do
     echo "run with netlink-task=$i"
