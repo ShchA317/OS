@@ -121,132 +121,9 @@ Vulnerabilities:
      30 ?        00:00:00 migration/2
      31 ?        00:00:02 ksoftirqd/2
      33 ?        00:00:00 kworker/2:0H-events_highpri
-     34 ?        00:00:00 cpuhp/3
-     35 ?        00:00:00 idle_inject/3
-     36 ?        00:00:00 migration/3
-     37 ?        00:00:02 ksoftirqd/3
-     39 ?        00:00:00 kworker/3:0H-events_highpri
-     40 ?        00:00:00 kdevtmpfs
-     41 ?        00:00:00 inet_frag_wq
-     42 ?        00:00:00 kauditd
-     43 ?        00:00:00 khungtaskd
-     44 ?        00:00:00 oom_reaper
-     46 ?        00:00:00 writeback
-     47 ?        00:00:02 kcompactd0
-     48 ?        00:00:00 ksmd
-     50 ?        00:00:03 khugepaged
-     51 ?        00:00:00 kintegrityd
-     52 ?        00:00:00 kblockd
-     53 ?        00:00:00 blkcg_punt_bio
-     56 ?        00:00:00 tpm_dev_wq
-     57 ?        00:00:00 ata_sff
-     58 ?        00:00:00 edac-poller
-     59 ?        00:00:00 devfreq_wq
-     60 ?        00:00:00 watchdogd
-     61 ?        00:00:00 kworker/3:1H-kblockd
-     62 ?        00:00:00 ksgxd
-     63 ?        00:00:00 kswapd0
-     64 ?        00:00:00 kthrotld
-     65 ?        00:00:00 acpi_thermal_pm
-     68 ?        00:00:02 hwrng
-     69 ?        00:00:00 scsi_eh_0
-     70 ?        00:00:00 scsi_tmf_0
-     71 ?        00:00:00 mld
-     72 ?        00:00:00 kworker/2:1H-events_highpri
-     73 ?        00:00:00 ipv6_addrconf
-     80 ?        00:00:00 kstrp
-     81 ?        00:00:00 zswap-shrink
-     82 ?        00:00:00 kworker/u9:0-rb_allocator
-     83 ?        00:00:00 charger_manager
-    125 ?        00:00:00 kworker/1:1H-kblockd
-    126 ?        00:00:00 kworker/0:1H-kblockd
-    127 ?        00:00:00 nvme-wq
-    128 ?        00:00:00 nvme-reset-wq
-    129 ?        00:00:00 nvme-delete-wq
-    130 ?        00:00:00 nvme-auth-wq
-    146 ?        00:00:02 jbd2/nvme0n1p2-8
-    147 ?        00:00:00 ext4-rsv-conver
-    184 ?        00:00:01 systemd-journal
-    229 ?        00:00:00 systemd-udevd
-    230 ?        00:00:00 psimon
-    231 ?        00:00:00 systemd-network
-    276 ?        00:00:00 cfg80211
-    282 ?        00:00:14 jbd2/nvme0n1p3-8
-    283 ?        00:00:00 ext4-rsv-conver
-    292 ?        00:00:54 irq/48-MSFT0001:01
-    296 ?        00:00:04 irq/130-iwlwifi:default_queue
-    297 ?        00:00:02 irq/131-iwlwifi:queue_1
-    298 ?        00:00:02 irq/132-iwlwifi:queue_2
-    299 ?        00:00:01 irq/133-iwlwifi:queue_3
-    300 ?        00:00:02 irq/134-iwlwifi:queue_4
-    301 ?        00:00:00 irq/135-iwlwifi:exception
-    302 ?        00:00:00 irq/136-mei_me
-    321 ?        00:00:00 cryptd
-    323 ?        00:00:08 systemd-resolve
-    324 ?        00:00:00 systemd-timesyn
-    335 ?        00:00:00 dbus-daemon
-    336 ?        00:00:00 systemd-logind
-    341 ?        00:05:41 containerd
-    344 ?        00:00:00 ttm
-    364 ?        00:00:00 card1-crtc0
-    365 ?        00:00:00 card1-crtc1
-    366 ?        00:00:00 card1-crtc2
-    381 ?        00:00:00 lightdm
-    393 tty7     01:17:10 Xorg
-    480 ?        00:00:00 lightdm
-    488 ?        00:00:00 systemd
-    489 ?        00:00:00 (sd-pam)
-    495 ?        00:23:22 pipewire
-    496 ?        00:00:02 wireplumber
-    497 ?        00:31:21 pipewire-pulse
-    498 ?        00:00:06 i3
-    504 ?        00:00:00 dbus-daemon
-    535 ?        00:04:26 polybar
-    539 ?        00:24:22 picom
-    555 ?        00:05:16 terminator
-    556 ?        00:00:00 at-spi-bus-laun
-    563 ?        00:00:00 dbus-daemon
-    584 ?        00:00:05 at-spi2-registr
-    616 ?        00:00:00 wpa_supplicant
-    953 ?        00:00:00 polkitd
-   1118 pts/3    00:00:05 fish
-  36477 pts/0    00:00:00 fish
-  36496 pts/0    00:07:07 htop
-  36513 pts/1    00:00:00 fish
-  36984 pts/4    00:00:00 fish
-  37483 pts/5    00:00:00 fish
-  37517 pts/5    00:00:08 vim
-  45020 pts/2    00:00:00 fish
-  45114 pts/2    00:00:00 bat
-  45116 pts/2    00:00:00 less
-  48879 ?        00:00:00 kworker/u9:2-rb_allocator
-  50067 pts/7    00:00:00 fish
-  84223 ?        00:00:01 kworker/u8:0-flush-259:0
-  85354 ?        00:00:01 kworker/u8:1-flush-259:0
-  89736 pts/6    00:00:00 fish
-  89788 ?        00:00:00 kworker/2:2-events
-  92846 ?        00:00:00 psimon
-  93241 ?        00:00:00 kworker/1:1-i915-unordered
-  93613 pts/4    00:00:00 man
-  93620 pts/4    00:00:00 man
-  93621 pts/4    00:00:00 less
-  95400 ?        00:00:00 kworker/u8:3-events_unbound
-  97344 ?        00:00:00 kworker/u8:2-events_unbound
-  97558 ?        00:00:00 kworker/0:2-i915-unordered
-  97670 ?        00:00:00 kworker/3:2-events
-  98534 ?        00:00:00 kworker/3:0-events
-  98571 ?        00:00:00 kworker/0:1-i915-unordered
-  98579 ?        00:00:00 kworker/2:1-rcu_gp
-  98655 ?        00:00:00 kworker/1:2-events
-  98707 ?        00:00:00 kworker/0:0-i915-unordered
-  99005 ?        00:00:00 kworker/2:0-rcu_gp
-  99089 ?        00:00:00 kworker/1:0-inet_frag_wq
-  99125 ?        00:00:00 kworker/3:1-rcu_gp
-  99126 ?        00:00:00 kworker/0:3-events
-  99401 ?        00:00:00 kworker/2:3
-  99402 ?        00:00:00 kworker/2:4-rcu_gp
-  99403 ?        00:00:00 kworker/u8:4-events_unbound
-  99463 ?        00:00:00 kworker/1:3-events
+     ....
+     всякие системные процессы
+     ....
   99541 pts/6    00:00:00 ps
 ```
 
@@ -367,7 +244,7 @@ sudo perf script | stackcollapse-perf.pl | flamegraph.pl > graph-float128-test.s
 
 для нахождения оптималььного значения параметра l1cache напишем простейший bash-скрипт:
 
-```bash
+```shell
 #!/bin/sh
 for i in {1..16..1}; do
     echo "run with l1cache=$i"
@@ -480,7 +357,7 @@ stress-ng: info:  [9325] successful run completed in 5.09 secs
 
 аналогично используем скрипт для поиска оптимального размера линии кэша
 
-```bash
+```shell
 #!/bin/sh
 for i in {1..16..1}; do
     echo "run with l1cache=$i"
@@ -617,6 +494,20 @@ stress-ng: info:  [3821] successful run completed in 21.13 secs
                    stressor can only be run on Linux and requires CAP_NET_ADMIN capability.
 
 
+воспользуемся скриптом для поиска оптимального значения параметра N:
+
+```shell
+#!/bin/sh
+for i in {1..16..1}; do
+    echo "run with netlink-task=$i"
+    a=`stress-ng --netlink-task $i --metrics --timeout 2`
+    echo "${a}"
+done
+```
+
+Лучший результат получили для N=2.
+
+
 > --netdev N
                    start N workers that exercise various netdevice ioctl commands across all the available  net‐
                    work   devices.   The  ioctls  exercised  by  this  stressor  are  as  follows:  SIOCGIFCONF,
@@ -624,6 +515,18 @@ stress-ng: info:  [3821] successful run completed in 21.13 secs
                    SIOCGIFMTU, SIOCGIFHWADDR, SIOCGIFMAP and SIOCGIFTXQLEN. See netdevice(7) for more details of
                    these ioctl commands.
 
+аналогично поиску значения параметра netlink-task, воспользуемся 
+
+```
+#!/bin/sh
+for i in {1..16..1}; do
+    echo "run with netlink-task=$i"
+    a=`stress-ng --netdev $i --metrics --timeout 2`
+    echo "${a}"
+done
+```
+
+лучшие результаты были получены при значении N=4
 
 ### pipe
 
