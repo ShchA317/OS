@@ -608,4 +608,47 @@ stress-ng: info:  [3821] successful run completed in 21.13 secs
 
 
 
+### network
+
+Из документации stress-ng:
+
+> --netlink-task N
+                   start  N  workers  that  collect  task  statistics via the netlink taskstats interface.  This
+                   stressor can only be run on Linux and requires CAP_NET_ADMIN capability.
+
+
+> --netdev N
+                   start N workers that exercise various netdevice ioctl commands across all the available  net‐
+                   work   devices.   The  ioctls  exercised  by  this  stressor  are  as  follows:  SIOCGIFCONF,
+                   SIOCGIFINDEX,  SIOCGIFNAME,   SIOCGIFFLAGS,   SIOCGIFADDR,   SIOCGIFNETMASK,   SIOCGIFMETRIC,
+                   SIOCGIFMTU, SIOCGIFHWADDR, SIOCGIFMAP and SIOCGIFTXQLEN. See netdevice(7) for more details of
+                   these ioctl commands.
+
+
+### pipe
+
+
+Из документации stress-ng:
+
+> --pipe-ops N
+                   stop pipe stress workers after N bogo pipe write operations.
+
+>   --sigpipe N
+                   start N workers that repeatedly spawn off child process that exits before a parent  can  com‐
+                   plete  a  pipe  write,  causing  a SIGPIPE signal.  The child process is either spawned using
+                   clone(2) if it is available or use the slower fork(2) instead.
+
+### sched
+
+
+> --sched-runtime runtime
+              select the runtime parameter for deadline scheduler (only on Linux). Default value  is  99999  (in
+              nanoseconds).
+
+
+> --schedpolicy N
+              start  N  workers  that  set  the  worker  to  various  available  scheduling policies out of
+              SCHED_OTHER, SCHED_BATCH, SCHED_IDLE, SCHED_FIFO, SCHED_RR and SCHED_DEADLINE.  For the  real
+              time  scheduling policies a random sched priority is selected between the minimum and maximum
+              scheduling priority settings.
 
