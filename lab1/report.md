@@ -275,60 +275,8 @@ stress-ng: metrc: [20330] stressor       bogo ops real time  usr time  sys time 
 stress-ng: metrc: [20330]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
 stress-ng: metrc: [20330] l1cache            1536      2.07      8.22      0.00       742.69         186.83        99.38          2724
 
-run with l1cache=5
-stress-ng: metrc: [20344] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20344]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20344] l1cache            1600      2.12      8.45      0.00       754.81         189.24        79.77          2848
+... подобные результаты
 
-run with l1cache=6
-stress-ng: metrc: [20350] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20350]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20350] l1cache            1600      2.14      8.61      0.00       748.93         185.77        67.19          2724
-
-run with l1cache=7
-stress-ng: metrc: [20390] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20390]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20390] l1cache            1536      2.05      8.26      0.00       749.23         185.97        57.55          2852
-
-run with l1cache=8
-stress-ng: metrc: [20398] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20398]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20398] l1cache            1664      2.17      8.92      0.00       765.59         186.39        51.34          2724
-
-run with l1cache=9
-stress-ng: metrc: [20447] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20447]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20447] l1cache            1728      2.30      9.25      0.01       752.33         186.59        44.80          2724
-
-run with l1cache=10
-stress-ng: metrc: [20457] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20457]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20457] l1cache            1920      2.51     10.24      0.00       766.46         187.47        40.88          2720
-
-run with l1cache=11
-stress-ng: metrc: [20518] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20518]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20518] l1cache            1728      2.17      8.96      0.01       795.38         192.63        37.54          2852
-
-run with l1cache=12
-stress-ng: metrc: [20530] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20530]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20530] l1cache            1536      2.05      8.22      0.01       749.61         186.74        33.45          2724
-
-run with l1cache=13
-stress-ng: metrc: [20563] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20563]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20563] l1cache            1728      2.23      8.96      0.01       776.16         192.82        30.96          2724
-
-run with l1cache=14
-stress-ng: metrc: [20595] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20595]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20595] l1cache            1792      2.40      9.64      0.01       747.24         185.81        28.73          2724
-
-run with l1cache=15
-stress-ng: metrc: [20632] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
-stress-ng: metrc: [20632]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
-stress-ng: metrc: [20632] l1cache            1920      2.46     10.33      0.01       779.16         185.62        27.98          2852
 
 run with l1cache=16
 stress-ng: metrc: [20668] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
@@ -443,6 +391,7 @@ Actual DISK READ:       0.00 B/s | Actual DISK WRITE:      60.79 M/s
 > --ioport N \
                    start N workers than perform bursts of 16 reads and 16 writes of ioport 0x80 (x86 Linux systems only).  I/O performed on x86 platforms on port 0x80 will cause delays on the CPU performing the I/O.
 
+а значит, что мы не нагружаем диск, а только обращаемся к ioport 0x80, тем самым нагружаем только CPU.
 
 результат выполнения НТ для 512 "воркеров":
 
