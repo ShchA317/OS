@@ -378,7 +378,35 @@ Total DISK READ :       0.00 B/s | Total DISK WRITE :      54.78 M/s
 Actual DISK READ:       0.00 B/s | Actual DISK WRITE:      60.79 M/s
 ```
 
-график нагрузки на IO-bridge:
+делаем вывод, что нагрузка идет, собирать её будем с помощью `iostat`, а обрабатывать с помощью awk:
+
+```shell
+sudo iostat -d -k 1 nvme0n1 | awk '/nvme0n1/ {printf "Read: "$3", Write: "$4" \n"}'
+```
+
+запустив параллельно `stress-ng`, на выходе получаем:
+
+```
+Read: 614.55, Write: 3442.87 
+Read: 0.00, Write: 0.00 
+Read: 0.00, Write: 31820.00 
+Read: 0.00, Write: 43332.00 
+Read: 0.00, Write: 42824.00 
+Read: 0.00, Write: 38068.00 
+Read: 0.00, Write: 45024.00 
+Read: 0.00, Write: 39572.00 
+Read: 0.00, Write: 42444.00 
+Read: 0.00, Write: 50544.00 
+Read: 0.00, Write: 39084.00 
+Read: 0.00, Write: 43564.00 
+Read: 0.00, Write: 38140.00 
+Read: 0.00, Write: 0.00 
+Read: 0.00, Write: 248.00 
+Read: 0.00, Write: 0.00 
+```
+
+
+график нагрузки на IO:
 
 
 
