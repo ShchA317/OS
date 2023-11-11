@@ -401,8 +401,6 @@ Read: 0.00, Write: 39084.00
 Read: 0.00, Write: 43564.00 
 Read: 0.00, Write: 38140.00 
 Read: 0.00, Write: 0.00 
-Read: 0.00, Write: 248.00 
-Read: 0.00, Write: 0.00 
 ```
 
 
