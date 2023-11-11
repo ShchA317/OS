@@ -480,6 +480,62 @@ stress-ng: info:  [3821] successful run completed in 21.13 secs
                      9    maximum memory usage. \
 
 
+переберём все значения параметра скриптом
+
+```
+#!/bin/sh
+for i in {1..9..1}; do
+    echo "run with zlib-mem-level=$i"
+    a=`stress-ng --zlib 1 --zlib-mem-level $i --metrics --timeout 10`
+    echo "$a"
+done
+```
+
+полученный результат будем сравнивать по параментру `compression rate`, который получаем в ответе stress-ng:
+
+```
+un with zlib-mem-level=9
+stress-ng: info:  [11938] setting to a 10 secs run per stressor
+stress-ng: info:  [11938] dispatching hogs: 1 zlib
+stress-ng: metrc: [11938] stressor       bogo ops real time  usr time  sys time   bogo ops/s     bogo ops/s CPU used per       RSS Max
+stress-ng: metrc: [11938]                           (secs)    (secs)    (secs)   (real time) (usr+sys time) instance (%)          (KB)
+stress-ng: metrc: [11938] zlib                386     10.02     10.17      0.01        38.54          37.92       101.63          3356
+stress-ng: metrc: [11938] miscellaneous metrics:
+stress-ng: metrc: [11938] zlib                  65.08 % compression ratio (geometric mean of 1 instances)
+stress-ng: metrc: [11938] zlib                   2.45 MB/sec compression rate (geometric mean of 1 instances)
+stress-ng: info:  [11938] skipped: 0
+stress-ng: info:  [11938] passed: 1: zlib (1)
+stress-ng: info:  [11938] failed: 0
+stress-ng: info:  [11938] metrics untrustworthy: 0
+stress-ng: info:  [11938] successful run completed in 10.02 secs
+```
+
+лучший результат получаем в тесте с максимальным ипользованием памяти (9). 
+
+Так как алгоритм zlib невероятно популярен и много где используется, имеет смысл чуть подробнее рассмотреть тесты с ним.
+
+загружается в основном процессор, а не память и поэтому имеет смысл построить flamegraph:
+
+```sh
+sudo perf record -F 99 -g stress-ng --zlib 4 --zlib-mem-level 9 --metrics --timeout 10
+sudo perf script | stackcollapse-perf.pl | flamegraph.pl > graph-zlib-test.svg
+```
+
+![zlib-flamegraph](images/graph-zlib-test.svg)
+
+замечаем, что программа тратит минимум времени на операции чтения и записи: 0.33% и 0.08% соответсвенно. Большинство времени проходит в libz.so. \
+Промониторив через `top` загрузку памяти и процессора убеждаемся, что процесс с нашей нагрузкой не потрбляет больше `0.1%` памяти, но зато ест `100%` процессора.
+
+---                   
+
+Из документации stress-ng:
+
+> --lockbus N \
+                 star t  N  workers  that  rapidly lock and increment 64 bytes of randomly chosen memory from a
+                   16MB mmap'd region (Intel x86 and ARM CPUs only).   This  will  cause  cacheline  misses  and
+                   stalling of CPUs.
+
+
 
 
 
