@@ -651,10 +651,34 @@ done
 
 ---
 
+Из документации stress-ng:
+
 >   --sigpipe N
                    start N workers that repeatedly spawn off child process that exits before a parent  can  com‐
                    plete  a  pipe  write,  causing  a SIGPIPE signal.  The child process is either spawned using
                    clone(2) if it is available or use the slower fork(2) instead.
+
+
+проделаем примерно то же, что и при тестировании --pipe-ops:
+
+```sh
+#!/bin/sh
+for i in {1..16..1}; do
+    a=`stress-ng --pipe 1 --sigpipe ${i} --metrics --timeout 1 | awk '/pipe /{print}' | head -n 1 | awk '{print $9}'`
+    echo "${i}, ${a}" >> data/sigpipe-data.csv
+done
+```
+
+```gnuplot
+#!/usr/bin/gnuplot --persist
+set key autotitle columnhead
+plot 'data/sigpipe-data.csv' using 1:2 with points pointsize 1 pointtype 7 lt 1
+```
+
+получаем очень показательный и повторяемый результат
+
+![sigpipe-testing](images/sigpipe-testing.png)
+
 
 ### sched
 
