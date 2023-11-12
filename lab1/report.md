@@ -578,6 +578,11 @@ done
 Лучший результат получили для N=2.
 
 
+
+---
+
+Из документации stress-ng:
+
 > --netdev N
                    start N workers that exercise various netdevice ioctl commands across all the available  net‐
                    work   devices.   The  ioctls  exercised  by  this  stressor  are  as  follows:  SIOCGIFCONF,
