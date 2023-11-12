@@ -535,7 +535,23 @@ sudo perf script | stackcollapse-perf.pl | flamegraph.pl > graph-zlib-test.svg
                    16MB mmap'd region (Intel x86 and ARM CPUs only).   This  will  cause  cacheline  misses  and
                    stalling of CPUs.
 
+построим flamegraph для нашего тестирования
 
+```sh
+sudo perf record -F 99 -g stress-ng --lockbus 128 --metrics --timeout 10
+sudo perf script | stackcollapse-perf.pl | flamegraph.pl > graph-lockbus-test.svg
+```
+
+![lockbus-test-graph](images/graph-lockbus-test.svg)
+
+видим, что на графике около 10% времени занимает системный выхов `_mmap`. Обращаем внимание, что большинство времени программа делает системный вызов `native_write_msr`.
+
+> native_write_msr - это системный вызов в Linux, который позволяет приложениям выполнять запись в модель состояния машины (MSR). MSR - это особый тип регистров на процессоре, которые контролируют и проверяют различные аспекты работы процессора и системы.
+
+
+спускаемся по стеку вызова и понимаем, что делает этот вызов не `stress-ng`, а `perf`. Скорее всего это происходит для сбора каких-то данных о состоянии машины. По документации `stress-ng` понимаем, что работа процессора останавливается при пропусках кэша и мы ждем доступа к памяти, оставляя тем самым процессорное время профилировщику. 
+
+Обращаем также внимание на активное использование вызова `split-lock-warn`, что ещё раз подтверждает гипотезу о освобождении процессорного времени под `perf`. 
 
 
 
