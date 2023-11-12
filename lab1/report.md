@@ -577,6 +577,9 @@ done
 
 Лучший результат получили для N=2.
 
+влияния на стевой трафик не было обнаружено с помощью `iptraf-ng`(iptraf для Arch) и `nload`. 
+
+---
 
 > --netdev N
                    start N workers that exercise various netdevice ioctl commands across all the available  net‐
@@ -590,7 +593,7 @@ done
 ```shell
 #!/bin/sh
 for i in {1..16..1}; do
-    echo "run with netlink-task=$i"
+    echo "run with netdev=$i"
     a=`stress-ng --netdev $i --metrics --timeout 2`
     echo "${a}"
 done
@@ -603,9 +606,21 @@ done
 
 Из документации stress-ng:
 
+> --pipe N
+                   start  N  workers  that  perform  large pipe writes and reads to exercise pipe I/O.  This exercises memory write and
+                   reads as well as context switching.  Each worker has two processes, a reader and a writer.
+
+
+
 > --pipe-ops N
                    stop pipe stress workers after N bogo pipe write operations.
 
+
+очевидно, что чем больше значение параметра pipe-ops, тем больше bogops выдаст тест. Поэтому для определения проихводительности в данном случае лучше подойдет bogo ops/s (real time). 
+
+---
+
+Из документации stress-ng:
 >   --sigpipe N
                    start N workers that repeatedly spawn off child process that exits before a parent  can  com‐
                    plete  a  pipe  write,  causing  a SIGPIPE signal.  The child process is either spawned using
@@ -613,12 +628,14 @@ done
 
 ### sched
 
-
+Из документации stress-ng:
 > --sched-runtime runtime
               select the runtime parameter for deadline scheduler (only on Linux). Default value  is  99999  (in
               nanoseconds).
 
+---
 
+Из документации stress-ng:
 > --schedpolicy N
               start  N  workers  that  set  the  worker  to  various  available  scheduling policies out of
               SCHED_OTHER, SCHED_BATCH, SCHED_IDLE, SCHED_FIFO, SCHED_RR and SCHED_DEADLINE.  For the  real
