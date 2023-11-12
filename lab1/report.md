@@ -611,6 +611,46 @@ done
 > --pipe-ops N
                    stop pipe stress workers after N bogo pipe write operations.
 
+
+за ключевой параметр производительности возьмём bogo ops/s (real time) и попробуем перебрать большой массив значений(от 16 до 10000) \
+полученные данные запишем в файл, а затем построим график
+
+```sh
+#!/bin/sh
+for i in {16..10000..16}; do
+    a=`stress-ng --pipe 1 --pipe-ops ${i} --metrics | awk '/pipe /{print}' | head -n 1 | awk '{print $9}'`
+    echo "${i}, ${a}" >> data/pipe-data
+done
+```
+
+```gnuplot
+#!/usr/bin/gnuplot --persist
+set key autotitle columnhead
+plot 'data/pipe-data' using 1:2 with points pointsize 1 pointtype 7 lt 1
+```
+
+![pipe-testing](images/pipe-testing.png)
+
+видим логарифмическую зависимость и какие-то выбросы в верхней части графика. Было выдвинуто предположение, что такого рода выбросы как-то связаны с непрерывным выполенением тестов одного за другим.
+
+модифицируем наш скрипт и повторим эксперимент: 
+
+```sh
+#!/bin/sh
+for i in {16..10000..16}; do
+    a=`stress-ng --pipe 1 --pipe-ops ${i} --metrics | awk '/pipe /{print}' | head -n 1 | awk '{print $9}'`
+    echo "${i}, ${a}" >> data/pipe-data
+    sleep 0.5
+done
+```
+
+
+![pipe-testing-sleep05](images/pipe-testing-sleep05.png)
+
+получили ещё больший разброс. Скорее всего это как-то связано с инифиализацией потоков и с кэшами процессора. Другого подходящего объяснения найти не удалось.
+
+---
+
 >   --sigpipe N
                    start N workers that repeatedly spawn off child process that exits before a parent  can  com‐
                    plete  a  pipe  write,  causing  a SIGPIPE signal.  The child process is either spawned using
