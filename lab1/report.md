@@ -735,6 +735,9 @@ sudo fdisk -l
 
 после этого в сети интернет находим заявленную производителем скорость и убеждаемся, что полученное в ходе теста значение отличается от заявленной производителем максимальной скорости записи не более, чем на 15%.
 
+---
+
+Из документации stress-ng:
 
 > --schedpolicy N
               start  N  workers  that  set  the  worker  to  various  available  scheduling policies out of
@@ -742,3 +745,37 @@ sudo fdisk -l
               time  scheduling policies a random sched priority is selected between the minimum and maximum
               scheduling priority settings.
 
+
+аналогично предыдущим тестам проведем перебор значений тестируемого параметра и составим график производительности. За основной показатель производительности возьмем скорость записи, которую для нас любезно замеряет stress-ng. 
+
+> обработка получаемого из теста текста в этом примере далека от каноничной
+
+```sh
+#!/bin/sh
+for i in {1..16..1}; do
+    a=`stress-ng --hdd 1 --schedpolicy 2 --metrics --timeout 5 | awk '/ hdd /{print}' | tail -n 2 | head -n 1 | awk '{print $5}'`
+    echo "${i}, ${a}" >> data/schedulepolicy-data2.csv
+done
+```
+
+для надежности результатов тест проведем дважды: 
+
+```sh
+#!/bin/sh
+for i in {1..16..1}; do
+    a=`stress-ng --hdd 1 --schedpolicy 2 --metrics --timeout 5 | awk '/ hdd /{print}' | tail -n 2 | head -n 1 | awk '{print $5}'`
+    echo "${i}, ${a}" >> data/schedulepolicy-data2.csv
+done
+```
+
+
+```gnuplot
+#!/usr/bin/gnuplot --persist
+set key autotitle columnhead
+plot 'data/schedulepolicy-data.csv' using 1:2 with linespoints pointsize 1 pointtype 7 lt 1, \
+'data/schedulepolicy-data2.csv' using 1:2 with linespoints pointsize 1 pointtype 7 lt 2
+```
+
+![sched-graph](images/sched-graph.png)
+
+найти закономерность в резултатах, а значит и надежно найти лучшее значение исследуемого параметра при помощи этого графика не получилось. Напрашивается вывод, что `--schedpolicy` в данном случае не влияет на скорость записи при изолированных остальных параметрах.
