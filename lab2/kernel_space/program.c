@@ -5,15 +5,7 @@
 #include <linux/sched/signal.h>
 #include <linux/slab.h>
 #include <linux/tty.h>
-
-struct my_task_struct{
-    int pid;
-    int ppid;
-    int com_len;
-    int tty_len;
-    char *cmd;
-    char *tty;
-};
+#include "my_task_struct.h"
 
 static void task_to_mts(struct task_struct *task, struct my_task_struct *mts){
     mts->pid = task->pid;
@@ -37,7 +29,6 @@ static int __init my_module_init(void){
        task_to_mts(task, mts);
        print_process_info(mts);
        kfree(mts);
-       printk(KERN_INFO "%lu\n", sizeof(*task));
     }
 
     return 0;
