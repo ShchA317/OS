@@ -9,19 +9,23 @@
 struct my_task_struct{
     int pid;
     int ppid;
-//    char cmd[];
-//    char tty[];
+    int com_len;
+    int tty_len;
+    char *cmd;
+    char *tty;
 };
 
 static void task_to_mts(struct task_struct *task, struct my_task_struct *mts){
     mts->pid = task->pid;
     mts->ppid = task_ppid_nr(task);
-//    mts->cmd = task->comm;
-//    mts->tty = tty_name(task->signal->tty);
+    mts->cmd = (char *)(task->comm);
+    mts->com_len = strlen(mts->cmd);
+    mts->tty = tty_name(task->signal->tty);
+    mts->tty_len = strlen(mts->tty);
 }
 
 static void print_process_info(struct my_task_struct *task){
-    printk(KERN_INFO "PID: %d, PPID: %d", task->pid, task->ppid);
+    printk(KERN_INFO "PID: %d, PPID: %d, CMD: %s, TTY: %s", task->pid, task->ppid, task->cmd, task->tty);
 }
 
 static int __init my_module_init(void){
@@ -38,7 +42,6 @@ static int __init my_module_init(void){
 
     return 0;
 }
-
 
 static void __exit my_module_exit(void){
     printk(KERN_INFO "Module exited\n");
