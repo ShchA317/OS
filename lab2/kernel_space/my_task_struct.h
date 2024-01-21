@@ -1,8 +1,8 @@
+#define TASK_COMM_LEN 16
+
 struct my_task_struct{
     int pid;
     int ppid;
-    int com_len;
-    int tty_len;
-    char *cmd;
-    char *tty;
+    char cmd[TASK_COMM_LEN];
+    char tty[64];
 };
